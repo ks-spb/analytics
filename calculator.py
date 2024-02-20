@@ -190,10 +190,9 @@ class Calculator:
         """Старый вариант поставки"""
         name = inspect.currentframe().f_code.co_name
         var = DAYS_BEFORE_DELIVERY + DAYS_LEFT
-        if self.result['days_left'] <= var:
-            self.result[name] = math.ceil(var * self.result['sales_speed'] - self.result['leftover'])
-            if self.result[name] < 0:
-                self.result[name] = 0
+        self.result[name] = math.ceil(var * self.result['sales_speed'] - self.result['leftover'])
+        if self.result[name] < 0:
+            self.result[name] = 0
         return self.result[name]
 
     def delivery_filter(self):
