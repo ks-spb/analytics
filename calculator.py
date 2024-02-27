@@ -135,7 +135,7 @@ class Calculator:
         name = inspect.currentframe().f_code.co_name
         self.result[name] = 0
         if self.article_wb in self.sales:
-            self.result[name] = self.sales[self.article_wb]['forPay']
+            self.result[name] = self.sales[self.article_wb]['priceWithDisc']
         return self.result[name]
 
     def leftover(self):

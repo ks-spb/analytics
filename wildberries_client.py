@@ -69,16 +69,16 @@ class WbSale(WbClient):
     def summary(self):
         """Считает для каждого артикула:
          - количество покупок,
-         - сумму поля forPay.
-        Возвращает словарь {'артикул': {'quantity': количество, 'forPay': сумма}}"""
+         - сумму поля priceWithDisc.
+        Возвращает словарь {артикул: {'quantity': количество, 'priceWithDisc': сумма}}"""
         data = dict()
         for subject in self.report:
             if int(subject['finishedPrice']) <= 0:
                 continue  # Не должна быть отрицательной цена
             if subject['supplierArticle'] not in data:
-                data[subject['supplierArticle']] = {'quantity': 0, 'forPay': 0}
+                data[subject['supplierArticle']] = {'quantity': 0, 'priceWithDisc': 0}
             data[subject['supplierArticle']]['quantity'] += 1
-            data[subject['supplierArticle']]['forPay'] += float(subject['forPay'])
+            data[subject['supplierArticle']]['priceWithDisc'] += float(subject['priceWithDisc'])
         return data
 
 
