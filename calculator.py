@@ -100,6 +100,12 @@ class Calculator:
         self.result[name] = self.article_wb
         return self.result[name]
 
+    def barcode(self):
+        """Штрихкод"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = self.google_data['Штрихкод'][self.line]
+        return self.result[name]
+
     def status(self):
         """Статус"""
         name = inspect.currentframe().f_code.co_name

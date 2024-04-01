@@ -15,6 +15,7 @@ fields = {
     'Наименование товара': calculator.product_name,
     'Артикул продавца': calculator.product_article,
     'Артикул WB': calculator.product_article_wb,
+    'Штрихкод': calculator.barcode,
     'Статус': calculator.status,
     'Заказано': calculator.ordered,
     'Сумма заказов с комиссией WB': calculator.ordered_sum,
@@ -34,7 +35,7 @@ fields = {
 }
 
 # Ширина столбцов по номерам
-width_column = [80, 15, 15] + [12]*30
+width_column = [80, 15, 15, 15] + [12]*30
 
 # Создаем новый документ
 wb = Workbook()
@@ -74,7 +75,7 @@ while not calculator.get_next_article() is None:
 ws.freeze_panes = 'D2'
 
 # Устанавливаем перенос по словам для ячеек в диапазоне от 1-20 первой строки
-for col in range(1, 21):
+for col in range(1, len(width_column)+1):
     cell = ws.cell(row=1, column=col)
     cell.alignment = styles.Alignment(wrap_text=True, horizontal='center', vertical='center')
     ws.column_dimensions[ws.cell(row=1, column=col).column_letter].width = width_column[col-1]
