@@ -63,7 +63,7 @@ while not calculator.get_next_article() is None:
         # Этот товар не продавался в отчетный период, запоминаем его артикул
         no_sales_products.append(
             (calculator.result['status'],
-             calculator.result['product_article_wb'],
+             calculator.result['product_article'],
              calculator.result['product_name'])
         )
 
