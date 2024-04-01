@@ -64,7 +64,8 @@ while not calculator.get_next_article() is None:
         no_sales_products.append(
             (calculator.result['status'],
              calculator.result['product_article'],
-             calculator.result['product_name'])
+             calculator.result['product_name'],
+             calculator.result['leftover'])
         )
 
     ws.append(row)
@@ -85,16 +86,16 @@ for col in range(1, 21):
 no_sales_sheet = wb.create_sheet(title="Не проданные товары")
 
 # Добавляем заголовки полей в первую строку
-no_sales_sheet.append(['Статус', 'Артикул', 'Наименование товара'])
+no_sales_sheet.append(['Статус', 'Артикул', 'Наименование товара', 'Остаток'])
 
 # Устанавливаем высоту первой строки
 no_sales_sheet.row_dimensions[1].height = 30
 
 # Ширина столбцов по номерам
-width_column = [15, 15, 100]
+width_column = [15, 15, 80, 15]
 
 # Устанавливаем свойства столбцов
-for col in range(1, 4):
+for col in range(1, 5):
     cell = no_sales_sheet.cell(row=1, column=col)
     cell.alignment = styles.Alignment(wrap_text=True, horizontal='center', vertical='center')
     no_sales_sheet.column_dimensions[no_sales_sheet.cell(row=1, column=col).column_letter].width = width_column[col-1]
