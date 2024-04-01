@@ -45,7 +45,9 @@ ws = wb.active
 # Добавляем заголовки полей в первую строку
 ws.append([i for i in fields.keys()])
 
-# Добавляем данные
+# Добавляем данные.
+# Создаем список свойств (артикул WB, Наименование товара) не проданных товаров
+no_sales_products = []
 while not calculator.get_next_article() is None:
     row = []
     for name_field, method in fields.items():
@@ -53,6 +55,15 @@ while not calculator.get_next_article() is None:
             row.append(method())
         except:
             pass
+
+    if calculator.result['purchased'] == 0:
+        # Этот товар не продавался в отчетный период, запоминаем его артикул
+        no_sales_products.append(
+            (calculator.result['status'],
+             calculator.result['product_article_wb'],
+             calculator.result['product_name'])
+        )
+
     ws.append(row)
 
 # Закрепление областей
@@ -63,6 +74,27 @@ for col in range(1, 21):
     cell = ws.cell(row=1, column=col)
     cell.alignment = styles.Alignment(wrap_text=True, horizontal='center', vertical='center')
     ws.column_dimensions[ws.cell(row=1, column=col).column_letter].width = width_column[col-1]
+
+
+# Добавление листа со списком не проданных товаров
+# ------------------------------------------------------------------
+no_sales_sheet = wb.create_sheet(title="Не проданные товары")
+
+# Добавляем заголовки полей в первую строку
+no_sales_sheet.append(['Статус', 'Артикул', 'Наименование товара'])
+
+# Ширина столбцов по номерам
+width_column = [15, 15, 100]
+
+# Устанавливаем свойства столбцов
+for col in range(1, 4):
+    cell = ws.cell(row=1, column=col)
+    cell.alignment = styles.Alignment(wrap_text=True, horizontal='center', vertical='center')
+    no_sales_sheet.column_dimensions[ws.cell(row=1, column=col).column_letter].width = width_column[col-1]
+
+# Заполнение листа данными
+for prop in no_sales_products:
+        no_sales_sheet.append(prop)
 
 # # Применение цветов
 # red_fill = PatternFill(start_color='FFFF0000', end_color='FFFF0000', fill_type='solid')
