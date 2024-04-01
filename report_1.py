@@ -2,7 +2,7 @@
 
 import string
 from openpyxl import Workbook, styles
-from openpyxl.styles import PatternFill
+from openpyxl.styles import Font
 
 from calculator import Calculator
 
@@ -45,6 +45,9 @@ ws = wb.active
 # Добавляем заголовки полей в первую строку
 ws.append([i for i in fields.keys()])
 
+# Устанавливаем высоту первой строки
+ws.row_dimensions[1].height = 60
+
 # Добавляем данные.
 # Создаем список свойств (артикул WB, Наименование товара) не проданных товаров
 no_sales_products = []
@@ -74,6 +77,7 @@ for col in range(1, 21):
     cell = ws.cell(row=1, column=col)
     cell.alignment = styles.Alignment(wrap_text=True, horizontal='center', vertical='center')
     ws.column_dimensions[ws.cell(row=1, column=col).column_letter].width = width_column[col-1]
+    cell.font = Font(bold=True)
 
 
 # Добавление листа со списком не проданных товаров
@@ -83,14 +87,18 @@ no_sales_sheet = wb.create_sheet(title="Не проданные товары")
 # Добавляем заголовки полей в первую строку
 no_sales_sheet.append(['Статус', 'Артикул', 'Наименование товара'])
 
+# Устанавливаем высоту первой строки
+no_sales_sheet.row_dimensions[1].height = 30
+
 # Ширина столбцов по номерам
 width_column = [15, 15, 100]
 
 # Устанавливаем свойства столбцов
 for col in range(1, 4):
-    cell = ws.cell(row=1, column=col)
+    cell = no_sales_sheet.cell(row=1, column=col)
     cell.alignment = styles.Alignment(wrap_text=True, horizontal='center', vertical='center')
-    no_sales_sheet.column_dimensions[ws.cell(row=1, column=col).column_letter].width = width_column[col-1]
+    no_sales_sheet.column_dimensions[no_sales_sheet.cell(row=1, column=col).column_letter].width = width_column[col-1]
+    cell.font = Font(bold=True)
 
 # Заполнение листа данными
 for prop in no_sales_products:
