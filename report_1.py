@@ -32,6 +32,10 @@ fields = {
     'Поставка по стоимости (фильтр)': calculator.delivery_filter,
     'Код 1С': calculator.code_1c,
     'Спецификация': calculator.specification,
+    'Скидка': calculator.discount,
+    'Стоимость до скидки': calculator.price_before_discount,
+    'Цена после скидки': calculator.price_after_discount,
+    'Разница': calculator.difference,
 }
 
 # Ширина столбцов по номерам

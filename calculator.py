@@ -229,3 +229,32 @@ class Calculator:
         self.result[name] = 'Основная'
         return self.result[name]
 
+    def discount(self):
+        """Скидка из таблицы Google"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = float(self.google_data['Скидка (ВБ)'][self.line])
+        return self.result[name]
+
+    def price_before_discount(self):
+        """Цена до скидки из таблицы Google"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = round(self.google_data['Цена до скидки'][self.line], 2)
+        return self.result[name]
+
+    def price_after_discount(self):
+        """Цена после скидки расчет"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = round(self.result['price_before_discount'] -
+                             self.result['price_before_discount'] * self.result['discount'], 2)
+        return self.result[name]
+
+    def difference(self):
+        """Разница в цене
+        от единицы (1) отнять Стоимость 1 шт деленную на Цену после скидки"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = 0
+        if self.result['price_one_item'] and self.result['price_one_item'] <= self.result['price_after_discount']:
+            self.result[name] = round(1 - self.result['price_one_item'] / self.result['price_after_discount'], 2)
+        return self.result[name]
+
+
