@@ -62,8 +62,8 @@ def get_google_document():
 
             # Проходимся по каждой ячейке в первой строке до 10 (заголовки столбцов)
             if not google_sheet_data:
-                head = True
-                for col in range(1, 11):
+                li = list(range(1,11)) + [81]  # Готовим номера выбираемых из таблицы столбцов (81 - это 'CC' упаковка)
+                for col in li:
                     field_name = sheet.cell(row=1, column=col).value
                     google_sheet_data[field_name] = []
                     columns[field_name] = col

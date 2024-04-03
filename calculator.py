@@ -257,4 +257,8 @@ class Calculator:
             self.result[name] = round(1 - self.result['price_one_item'] / self.result['price_after_discount'], 2)
         return self.result[name]
 
-
+    def package(self):
+        """Упаковка таблицы Google"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = self.google_data['Упаковка'][self.line]
+        return self.result[name]

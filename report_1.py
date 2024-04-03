@@ -36,6 +36,7 @@ fields = {
     'Стоимость до скидки': calculator.price_before_discount,
     'Цена после скидки': calculator.price_after_discount,
     'Разница': calculator.difference,
+    'Упаковка': calculator.package,
 }
 
 # Ширина столбцов по номерам
