@@ -21,7 +21,7 @@ else:
 TOKEN_WB = env("TOKEN_WB")
 SHEET_URL = env("SHEET_URL")  # Документ Google
 ARTICLE_DICT = env("ARTICLE_DICT")  # Словарь сопоставления
-
+TOKEN_DCA = env("TOKEN_DCA")
 
 def old_date(mon):
     today = datetime.now()

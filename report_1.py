@@ -24,6 +24,8 @@ fields = {
     'Остаток': calculator.leftover,
     'Стоимость 1 шт.': calculator.price_one_item,
     'Дней продаж': calculator.sales_days,
+    'Дней в наличии на FBO': calculator.days_in_fbo,
+    'Дней в наличии на FBS': calculator.days_in_fbs,
     'Скорость продаж': calculator.sales_speed,
     'Остатка хватит, дней': calculator.days_left,
     'Дней до отгрузки': calculator.days_before_delivery,

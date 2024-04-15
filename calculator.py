@@ -4,9 +4,10 @@ from datetime import datetime
 
 from function import old_date, get_google_document, get_article_dict
 from wildberries_client import WbOrder, WbSale, WbStock
+from dca_client import DCAClient
 
 
-MONTH = 3  # Месяцев, за которые делается отчет
+MONTH = 1  # Месяцев, за которые делается отчет
 DAYS_BEFORE_DELIVERY = 10  # Сколько дней до отгрузки
 DAYS_LEFT = 30  # На сколько дней должно хватить поставки
 
@@ -54,6 +55,11 @@ class Calculator:
 
         # Получаем словарь артикулов для перевода {артикул в Google документе: артикул в WB}
         self.article_dict = get_article_dict()
+
+        # Получаем данные о количестве дней за период отчета в которые товары были на складах
+        dca = DCAClient()
+        self.was_in_stock_fbo = dca.get_fbo(self.old_date, self.to_date)  # Информация по складам FBO
+        self.was_in_stock_fbs = dca.get_fbs(self.old_date, self.to_date)  # Информация по складам FBS
 
     def get_next_article(self):
         """Переходит к следующей строке в списке словаря
@@ -164,6 +170,22 @@ class Calculator:
     def sales_days(self):
         """Количество дней продаж"""
         return self.days_passed
+
+    def days_in_fbo(self):
+        """Количество дней в наличии на FBO"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = None
+        if self.article_wb in self.was_in_stock_fbo:
+            self.result[name] = int(self.was_in_stock_fbo[self.article_wb])
+        return self.result[name]
+
+    def days_in_fbs(self):
+        """Количество дней в наличии на FBS"""
+        name = inspect.currentframe().f_code.co_name
+        self.result[name] = None
+        if self.article_wb in self.was_in_stock_fbs:
+            self.result[name] = int(self.was_in_stock_fbs[self.article_wb])
+        return self.result[name]
 
     def sales_speed(self):
         """Скорость продаж"""
