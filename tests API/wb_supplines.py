@@ -90,8 +90,8 @@ for id in reversed(supplyIds):
 
         params2 = {
             'type': 'png',
-            'width': 40,
-            'height': 30,
+            'width': 58,
+            'height': 40,
         }
         response = requests.post(url, headers=headers, data=json.dumps(params), params=params2)
         # print(response.status_code, response.content)
